@@ -1,7 +1,7 @@
 local kraneIllusionSplitter = {}
 
-kraneIllusionSplitter.Enabled = Menu.AddOption({"KRANE", "Hero", "Phantom Lancer"}, "Illusion Splitter", "")
-kraneIllusionSplitter.Trigger = Menu.AddKeyOption({"KRANE", "Hero", "Phantom Lancer"}, "Key bind", 0)
+kraneIllusionSplitter.Enabled = Menu.AddOption({"KRANE", "Illusions", "Illusion Splitter"}, "Illusion Splitter", "SUPPORTED HEROES:\n↓↓↓↓\nPhantom Lancer\nTerror Blade")
+kraneIllusionSplitter.Trigger = Menu.AddKeyOption({"KRANE", "Illusions", "Illusion Splitter"}, "Key bind", 0)
 
 --vars
 local everyBodyInRadius = nil
