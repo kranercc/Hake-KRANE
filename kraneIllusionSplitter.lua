@@ -1,6 +1,6 @@
 local kraneIllusionSplitter = {}
 
-kraneIllusionSplitter.Enabled = Menu.AddOption({"KRANE", "Illusions", "Illusion Splitter"}, "Illusion Splitter", "SUPPORTED HEROES:\n↓↓↓↓\nPhantom Lancer\nTerror Blade")
+kraneIllusionSplitter.Enabled = Menu.AddOption({"KRANE", "Illusions", "Illusion Splitter"}, "Illusion Splitter", "SUPPORTED HEROES:\n↓↓↓↓\nPhantom Lancer\nTerror Blade\nNaga Siren")
 kraneIllusionSplitter.Trigger = Menu.AddKeyOption({"KRANE", "Illusions", "Illusion Splitter"}, "Key bind", 0)
 kraneIllusionSplitter.SplitUpEnabled = Menu.AddOption({"KRANE", "Illusions", "Illusion Splitter"}, "Split Up / Don\'t focuse main hero", "")
 
@@ -28,8 +28,8 @@ function kraneIllusionSplitter.OnUpdate()
                 local asRandomAsItGets = os.clock()%1
                 randomX = math.random(-600, 600)*asRandomAsItGets   
                 randomY = math.random(-600, 600)*asRandomAsItGets
-                
-                if NPC.GetUnitName(v) == "npc_dota_hero_phantom_lancer" or NPC.GetUnitName(v) == "npc_dota_hero_terrorblade" or then
+                --so you can just make a vector holding all the heroes in dota or something like this to basicly control manta illusions but i think thats an exageration since 2 illusions are not really that important
+                if NPC.GetUnitName(v) == "npc_dota_hero_phantom_lancer" or NPC.GetUnitName(v) == "npc_dota_hero_terrorblade" or NPC.GetUnitName(v) == "npc_dota_hero_naga_siren" then
                     if Menu.IsEnabled(kraneIllusionSplitter.SplitUpEnabled) then
                         myPosition = Entity.GetOrigin(v)
                     else
