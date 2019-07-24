@@ -1,5 +1,4 @@
 local kraneMorphVsSeekerPassive = {}
-
 kraneMorphVsSeekerPassive.IsEnabled = Menu.AddOption({"Utility", "KRANE", "Morph vs Seeker"}, "Morph vs Blood Seeker", "This script will allow Morphling to morph to strength\nso it will evade being seen on the map")
 local shouldMorph = false
 local lastTime = nil
@@ -35,13 +34,19 @@ function kraneMorphVsSeekerPassive.OnUpdate()
                     --activate str
                     shouldMorph = true
                 end
-                local secondsPassed = os ~= nil and os.time() or tick()
                 
-
+                local secondsPassed = os ~= nil and os.time() or tick()
                 if shouldMorph == true then
-                    if Ability.IsReady(ability_StrMorph) and lastTime ~= secondsPassed then
-                        Ability.Toggle(ability_StrMorph)
-                        shouldMorph = false
+                    --if you should morph, don't just morph and then stop and repeat
+                    --you can keep morphing to get more and more hp WHILE you are under the effect of vision
+                    if NPC.HasModifier(myHero, "modifier_bloodseeker_thirst_vision") and Ability.GetToggleState(ability_StrMorph) then
+                        do
+                        end
+                    else
+                        if Ability.IsReady(ability_StrMorph) and lastTime ~= secondsPassed then
+                            Ability.Toggle(ability_StrMorph)
+                            shouldMorph = false
+                        end
                     end
                 end
             
