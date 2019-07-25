@@ -4,7 +4,7 @@ kraneIllusionFarmer.Enabled = Menu.AddOption({"KRANE", "Dynamic", "Farmer"}, "Ac
 kraneIllusionFarmer.EvadeHeroesEnabled = Menu.AddOption({"KRANE", "Dynamic", "Farmer" }, "Evade Heroes", "Will run away if there is any enemy in 950 range")
 kraneIllusionFarmer.FarmClosestKey = Menu.AddKeyOption({"KRANE", "Dynamic", "Farmer"}, "Farm closest creep / neutral", 0)
 
-local myPlayer = Players.GetLocal()
+local myPlayer = nil
 local myHero = nil
 local myFountain = nil
 local lastTime = nil
@@ -93,6 +93,7 @@ function farmEverything()
     for k, v in pairs(NPCs.GetAll()) do
         if NPC.GetUnitName(v) == NPC.GetUnitName(myHero) and NPC.IsIllusion(v) and NPC.IsAttacking(v) == false then
             table.insert(myIllusions, v)
+            Log.Write("added element")
             stopAT = stopAT - 1
             if stopAT == 0 then
                 break
@@ -101,13 +102,12 @@ function farmEverything()
     end
 
     for k, v in pairs(myIllusions) do
-        closestEntity = Entity.GetUnitsInRadius(v, 5000, Enum.TeamType.TEAM_ENEMY)
+        closestEntity = Entity.GetUnitsInRadius(v, 2500, Enum.TeamType.TEAM_ENEMY)
         
-        if NPC.IsAttacking(v) == false then
+        if NPC.IsAttacking(v) == false and NPC.IsRunning(v) == false then
             --check for entities aroudn every o\ne
             
             --i = i + 200
-            Log.Write(i)
             for k, entity in pairs(closestEntity) do
                 --attack the entity
                 if Entity.IsHero(entity) == false then
@@ -116,7 +116,9 @@ function farmEverything()
                     end
                 end
                 break
-            end        
+                
+            end   
+            
         end
         
     end
@@ -127,13 +129,14 @@ end
 --      UTILITY FUNCTIONS
 --
 function AttackSomeone(target, illusion)
-    if NPC.IsAttacking(illusion) == false or NPC.IsRunning(illusion) == false then
+  --  if NPC.IsAttacking(illusion) == false and NPC.IsRunning(illusion) == false then
     --Player.AttackTarget(myPlayer, illusion, target, false)
+    myPlayer = Players.GetLocal()
         if Entity.IsAlive(illusion) then
             Player.PrepareUnitOrders(myPlayer, Enum.UnitOrder.DOTA_UNIT_ORDER_ATTACK_TARGET, target, Vector(0, 0, 0), nil, Enum.PlayerOrderIssuer.DOTA_ORDER_ISSUER_PASSED_UNIT_ONLY, illusion, false, true)   
             Log.Write("hitting this x") 
         end
-    end
+   -- end
 end
 
 function addDelay(seconds, whatToExecute, param1, param2)
